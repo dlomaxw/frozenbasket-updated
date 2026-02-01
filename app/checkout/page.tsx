@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
 import { ShieldCheck, Truck, CreditCard, User, LogIn } from "lucide-react"
-import { createOrder, type Order, type OrderItem } from "@/lib/firebase/database"
+import { createOrder, type Order, type OrderItem } from "@/lib/local-api"
 import Link from "next/link"
 
 const DELIVERY_FEE = 5000

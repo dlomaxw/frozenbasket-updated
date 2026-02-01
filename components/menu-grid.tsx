@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { FLAVORS } from "@/lib/constants"
 import type { Flavor } from "@/lib/types"
 import { Search, Plus, IceCream, Sparkles, Croissant } from "lucide-react"
-import { getProductTypes, getBakeryProducts, initializeDefaultData, forceUpdateAllImages, type ProductType, type BakeryProduct } from "@/lib/firebase/database"
+import { getProductTypes, getBakeryProducts, initializeDefaultData, forceUpdateAllImages, type ProductType, type BakeryProduct } from "@/lib/local-api"
 import Link from "next/link"
 
 interface MenuGridProps {
@@ -25,7 +25,7 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
   useEffect(() => {
     async function fetchData() {
       try {
-// Try to initialize default data (may fail if no write permission)
+        // Try to initialize default data (may fail if no write permission)
         try {
           await initializeDefaultData()
           // Force update all images to ensure correct images are displayed
@@ -33,14 +33,14 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
         } catch (initErr) {
           // Silently continue if init fails
         }
-        
+
         // Fetch mix builder products
         const products = await getProductTypes()
         if (products.length > 0) {
           setMixProducts(products)
         }
         setLoadingProducts(false)
-        
+
         // Fetch bakery products
         const bakery = await getBakeryProducts()
         if (bakery.length > 0) {
@@ -63,14 +63,14 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
     return matchesCategory && matchesSearch
   })
 
-  const filteredProducts = mixProducts.filter((p) => 
+  const filteredProducts = mixProducts.filter((p) =>
     p.name.toLowerCase().includes(search.toLowerCase())
   )
 
   return (
     <div className="bg-background min-h-screen py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* SECTION 1: Mix Builder Products (12 Products from Database) */}
         <section className="mb-20">
           <div className="text-center mb-12">
@@ -160,11 +160,10 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
-                    activeCategory === cat
+                  className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${activeCategory === cat
                       ? "bg-brandBlue text-white"
                       : "bg-muted text-muted-foreground hover:bg-muted/80"
-                  }`}
+                    }`}
                 >
                   {cat}
                 </button>

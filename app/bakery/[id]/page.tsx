@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
-import { getBakeryProduct, getBakeryToppings, type BakeryProduct, type BakeryTopping as DbTopping } from "@/lib/firebase/database"
+import { getBakeryProduct, getBakeryToppings, type BakeryProduct, type BakeryTopping as DbTopping } from "@/lib/local-api"
 import { useCartStore } from "@/lib/cart-store"
 import type { BakeryTopping, BakeryOrder } from "@/lib/types"
 import { ArrowLeft, Plus, Minus, ShoppingCart, Check, Croissant } from "lucide-react"
@@ -155,11 +155,10 @@ export default function BakeryOrderPage() {
                   <button
                     key={topping.id}
                     onClick={() => toggleTopping(topping)}
-                    className={`flex items-center justify-between p-3 rounded-xl border-2 transition-all ${
-                      isToppingSelected(topping.id)
+                    className={`flex items-center justify-between p-3 rounded-xl border-2 transition-all ${isToppingSelected(topping.id)
                         ? "border-amber-500 bg-amber-50"
                         : "border-border hover:border-amber-300"
-                    }`}
+                      }`}
                   >
                     <span className="font-medium text-sm">{topping.name}</span>
                     <div className="flex items-center gap-2">
@@ -232,11 +231,10 @@ export default function BakeryOrderPage() {
             <Button
               onClick={handleAddToCart}
               disabled={addedToCart}
-              className={`w-full py-6 text-lg font-bold rounded-full transition-all ${
-                addedToCart
+              className={`w-full py-6 text-lg font-bold rounded-full transition-all ${addedToCart
                   ? "bg-green-500 hover:bg-green-500"
                   : "bg-amber-500 hover:bg-amber-600"
-              }`}
+                }`}
             >
               {addedToCart ? (
                 <>
