@@ -1,6 +1,15 @@
 import { ref, get, set, push, update, remove, query, orderByChild, equalTo } from "firebase/database"
 import { database } from "./config"
 
+// Helper to check if database is available
+function checkDatabase() {
+  if (!database) {
+    console.warn("[v0] Firebase database not configured")
+    return false
+  }
+  return true
+}
+
 // ============ PRODUCT TYPES (Mix Builder) ============
 export interface ProductType {
   id: string
@@ -18,7 +27,8 @@ export interface ProductType {
 }
 
 export async function getProductTypes(): Promise<ProductType[]> {
-  const snapshot = await get(ref(database, "product_types"))
+  if (!checkDatabase()) return []
+  const snapshot = await get(ref(database!, "product_types"))
   if (!snapshot.exists()) return []
   const data = snapshot.val()
   return Object.keys(data)
@@ -28,21 +38,25 @@ export async function getProductTypes(): Promise<ProductType[]> {
 }
 
 export async function getProductType(id: string): Promise<ProductType | null> {
-  const snapshot = await get(ref(database, `product_types/${id}`))
+  if (!checkDatabase()) return null
+  const snapshot = await get(ref(database!, `product_types/${id}`))
   if (!snapshot.exists()) return null
   return { id, ...snapshot.val() }
 }
 
 export async function saveProductType(id: string, data: Partial<ProductType>): Promise<void> {
-  await set(ref(database, `product_types/${id}`), data)
+  if (!checkDatabase()) return
+  await set(ref(database!, `product_types/${id}`), data)
 }
 
 export async function updateProductType(id: string, data: Partial<ProductType>): Promise<void> {
-  await update(ref(database, `product_types/${id}`), data)
+  if (!checkDatabase()) return
+  await update(ref(database!, `product_types/${id}`), data)
 }
 
 export async function deleteProductType(id: string): Promise<void> {
-  await remove(ref(database, `product_types/${id}`))
+  if (!checkDatabase()) return
+  await remove(ref(database!, `product_types/${id}`))
 }
 
 // ============ BAKERY PRODUCTS ============
@@ -58,7 +72,8 @@ export interface BakeryProduct {
 }
 
 export async function getBakeryProducts(): Promise<BakeryProduct[]> {
-  const snapshot = await get(ref(database, "bakery_products"))
+  if (!checkDatabase()) return []
+  const snapshot = await get(ref(database!, "bakery_products"))
   if (!snapshot.exists()) return []
   const data = snapshot.val()
   return Object.keys(data)
@@ -68,21 +83,25 @@ export async function getBakeryProducts(): Promise<BakeryProduct[]> {
 }
 
 export async function getBakeryProduct(id: string): Promise<BakeryProduct | null> {
-  const snapshot = await get(ref(database, `bakery_products/${id}`))
+  if (!checkDatabase()) return null
+  const snapshot = await get(ref(database!, `bakery_products/${id}`))
   if (!snapshot.exists()) return null
   return { id, ...snapshot.val() }
 }
 
 export async function saveBakeryProduct(id: string, data: Partial<BakeryProduct>): Promise<void> {
-  await set(ref(database, `bakery_products/${id}`), data)
+  if (!checkDatabase()) return
+  await set(ref(database!, `bakery_products/${id}`), data)
 }
 
 export async function updateBakeryProduct(id: string, data: Partial<BakeryProduct>): Promise<void> {
-  await update(ref(database, `bakery_products/${id}`), data)
+  if (!checkDatabase()) return
+  await update(ref(database!, `bakery_products/${id}`), data)
 }
 
 export async function deleteBakeryProduct(id: string): Promise<void> {
-  await remove(ref(database, `bakery_products/${id}`))
+  if (!checkDatabase()) return
+  await remove(ref(database!, `bakery_products/${id}`))
 }
 
 // ============ BAKERY TOPPINGS ============
@@ -96,7 +115,8 @@ export interface BakeryTopping {
 }
 
 export async function getBakeryToppings(): Promise<BakeryTopping[]> {
-  const snapshot = await get(ref(database, "bakery_toppings"))
+  if (!checkDatabase()) return []
+  const snapshot = await get(ref(database!, "bakery_toppings"))
   if (!snapshot.exists()) return []
   const data = snapshot.val()
   return Object.keys(data)
@@ -106,11 +126,13 @@ export async function getBakeryToppings(): Promise<BakeryTopping[]> {
 }
 
 export async function saveBakeryTopping(id: string, data: Partial<BakeryTopping>): Promise<void> {
-  await set(ref(database, `bakery_toppings/${id}`), data)
+  if (!checkDatabase()) return
+  await set(ref(database!, `bakery_toppings/${id}`), data)
 }
 
 export async function deleteBakeryTopping(id: string): Promise<void> {
-  await remove(ref(database, `bakery_toppings/${id}`))
+  if (!checkDatabase()) return
+  await remove(ref(database!, `bakery_toppings/${id}`))
 }
 
 // ============ ORDERS ============
@@ -143,20 +165,23 @@ export interface Order {
 }
 
 export async function createOrder(order: Omit<Order, "id">): Promise<string> {
-  const ordersRef = ref(database, "orders")
+  if (!checkDatabase()) return ""
+  const ordersRef = ref(database!, "orders")
   const newOrderRef = push(ordersRef)
   await set(newOrderRef, order)
   return newOrderRef.key!
 }
 
 export async function getOrder(id: string): Promise<Order | null> {
-  const snapshot = await get(ref(database, `orders/${id}`))
+  if (!checkDatabase()) return null
+  const snapshot = await get(ref(database!, `orders/${id}`))
   if (!snapshot.exists()) return null
   return { id, ...snapshot.val() }
 }
 
 export async function getUserOrders(userId: string): Promise<Order[]> {
-  const snapshot = await get(ref(database, "orders"))
+  if (!checkDatabase()) return []
+  const snapshot = await get(ref(database!, "orders"))
   if (!snapshot.exists()) return []
   const data = snapshot.val()
   return Object.keys(data)
@@ -166,7 +191,8 @@ export async function getUserOrders(userId: string): Promise<Order[]> {
 }
 
 export async function getAllOrders(): Promise<Order[]> {
-  const snapshot = await get(ref(database, "orders"))
+  if (!checkDatabase()) return []
+  const snapshot = await get(ref(database!, "orders"))
   if (!snapshot.exists()) return []
   const data = snapshot.val()
   return Object.keys(data)
@@ -175,11 +201,13 @@ export async function getAllOrders(): Promise<Order[]> {
 }
 
 export async function updateOrderStatus(id: string, status: Order["status"]): Promise<void> {
-  await update(ref(database, `orders/${id}`), { status, updatedAt: new Date().toISOString() })
+  if (!checkDatabase()) return
+  await update(ref(database!, `orders/${id}`), { status, updatedAt: new Date().toISOString() })
 }
 
 export async function updatePaymentStatus(id: string, paymentStatus: Order["paymentStatus"]): Promise<void> {
-  await update(ref(database, `orders/${id}`), { paymentStatus, updatedAt: new Date().toISOString() })
+  if (!checkDatabase()) return
+  await update(ref(database!, `orders/${id}`), { paymentStatus, updatedAt: new Date().toISOString() })
 }
 
 // Image mappings for products - correct URLs from Supabase
@@ -206,27 +234,28 @@ const BAKERY_IMAGES: Record<string, string> = {
 
 // Force update all product images (used when images need to be fixed)
 export async function forceUpdateAllImages(): Promise<void> {
+  if (!checkDatabase()) return
   try {
-    // Update all product type images
-    const productTypesSnapshot = await get(ref(database, "product_types"))
+  // Update all product type images
+  const productTypesSnapshot = await get(ref(database!, "product_types"))
     if (productTypesSnapshot.exists()) {
       const data = productTypesSnapshot.val()
       for (const [id] of Object.entries(data)) {
         const newImage = PRODUCT_IMAGES[id]
-        if (newImage) {
-          await update(ref(database, `product_types/${id}`), { image: newImage })
+  if (newImage) {
+  await update(ref(database!, `product_types/${id}`), { image: newImage })
         }
       }
     }
 
-    // Update all bakery product images
-    const bakerySnapshot = await get(ref(database, "bakery_products"))
+// Update all bakery product images
+  const bakerySnapshot = await get(ref(database!, "bakery_products"))
     if (bakerySnapshot.exists()) {
       const data = bakerySnapshot.val()
       for (const [id] of Object.entries(data)) {
-        const newImage = BAKERY_IMAGES[id]
-        if (newImage) {
-          await update(ref(database, `bakery_products/${id}`), { image: newImage })
+const newImage = BAKERY_IMAGES[id]
+  if (newImage) {
+  await update(ref(database!, `bakery_products/${id}`), { image: newImage })
         }
       }
     }
@@ -237,36 +266,37 @@ export async function forceUpdateAllImages(): Promise<void> {
 
 // Update missing images for existing products
 export async function updateMissingImages(): Promise<void> {
+  if (!checkDatabase()) return
   try {
-    // Update product type images
-    const productTypesSnapshot = await get(ref(database, "product_types"))
-    if (productTypesSnapshot.exists()) {
-      const data = productTypesSnapshot.val()
-      for (const [id, product] of Object.entries(data)) {
-        const p = product as any
-        if (!p.image || p.image === "" || p.image === "/placeholder.svg") {
-          const newImage = PRODUCT_IMAGES[id]
-          if (newImage) {
-            await update(ref(database, `product_types/${id}`), { image: newImage })
-          }
-        }
-      }
-    }
-
-    // Update bakery product images
-    const bakerySnapshot = await get(ref(database, "bakery_products"))
-    if (bakerySnapshot.exists()) {
-      const data = bakerySnapshot.val()
-      for (const [id, product] of Object.entries(data)) {
-        const p = product as any
-        if (!p.image || p.image === "" || p.image === "/placeholder.svg") {
-          const newImage = BAKERY_IMAGES[id]
-          if (newImage) {
-            await update(ref(database, `bakery_products/${id}`), { image: newImage })
-          }
-        }
-      }
-    }
+  // Update product type images
+  const productTypesSnapshot = await get(ref(database!, "product_types"))
+  if (productTypesSnapshot.exists()) {
+  const data = productTypesSnapshot.val()
+  for (const [id, product] of Object.entries(data)) {
+  const p = product as any
+  if (!p.image || p.image === "" || p.image === "/placeholder.svg") {
+  const newImage = PRODUCT_IMAGES[id]
+  if (newImage) {
+  await update(ref(database!, `product_types/${id}`), { image: newImage })
+  }
+  }
+  }
+  }
+  
+  // Update bakery product images
+  const bakerySnapshot = await get(ref(database!, "bakery_products"))
+  if (bakerySnapshot.exists()) {
+  const data = bakerySnapshot.val()
+  for (const [id, product] of Object.entries(data)) {
+  const p = product as any
+  if (!p.image || p.image === "" || p.image === "/placeholder.svg") {
+  const newImage = BAKERY_IMAGES[id]
+  if (newImage) {
+  await update(ref(database!, `bakery_products/${id}`), { image: newImage })
+  }
+  }
+  }
+  }
   } catch (err) {
     console.log("[v0] Could not update images:", err)
   }
@@ -274,8 +304,9 @@ export async function updateMissingImages(): Promise<void> {
 
 // ============ INITIALIZE DEFAULT DATA ============
 export async function initializeDefaultData(): Promise<void> {
+  if (!checkDatabase()) return
   // Check if product_types exists
-  const productTypesSnapshot = await get(ref(database, "product_types"))
+  const productTypesSnapshot = await get(ref(database!, "product_types"))
   if (!productTypesSnapshot.exists()) {
     // Add default product types with correct images from Supabase
     const defaultProductTypes: Record<string, Omit<ProductType, "id">> = {
@@ -379,11 +410,11 @@ export async function initializeDefaultData(): Promise<void> {
         sort_order: 12,
       },
     }
-    await set(ref(database, "product_types"), defaultProductTypes)
+    await set(ref(database!, "product_types"), defaultProductTypes)
   }
 
   // Check if bakery_products exists
-  const bakeryProductsSnapshot = await get(ref(database, "bakery_products"))
+  const bakeryProductsSnapshot = await get(ref(database!, "bakery_products"))
   if (!bakeryProductsSnapshot.exists()) {
     const defaultBakeryProducts: Record<string, Omit<BakeryProduct, "id">> = {
       crepes: {
@@ -414,11 +445,11 @@ export async function initializeDefaultData(): Promise<void> {
         sort_order: 3,
       },
     }
-    await set(ref(database, "bakery_products"), defaultBakeryProducts)
+    await set(ref(database!, "bakery_products"), defaultBakeryProducts)
   }
 
   // Check if bakery_toppings exists
-  const bakeryToppingsSnapshot = await get(ref(database, "bakery_toppings"))
+  const bakeryToppingsSnapshot = await get(ref(database!, "bakery_toppings"))
   if (!bakeryToppingsSnapshot.exists()) {
     const defaultBakeryToppings: Record<string, Omit<BakeryTopping, "id">> = {
       nutella: { name: "Nutella", price: 2000, is_active: true, sort_order: 1 },
@@ -430,6 +461,6 @@ export async function initializeDefaultData(): Promise<void> {
       "chocolate-chips": { name: "Chocolate Chips", price: 2000, is_active: true, sort_order: 7 },
       "chocolate-flakes": { name: "Chocolate Flakes", price: 2000, is_active: true, sort_order: 8 },
     }
-    await set(ref(database, "bakery_toppings"), defaultBakeryToppings)
+    await set(ref(database!, "bakery_toppings"), defaultBakeryToppings)
   }
 }
