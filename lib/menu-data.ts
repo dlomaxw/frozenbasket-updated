@@ -308,63 +308,65 @@ export const MENU_CATEGORIES = {
         id: "bakery",
         title: "Bakery",
         description: "Freshly baked goodness",
-        image: "/images/menu-items/20.png",
+        image: "/images/menu-items/chocolate-cake.png",
         items: [
             {
                 id: "cakes",
                 name: "Cakes",
                 description: "Delicious slices",
                 price: 15000,
-                image: "/images/menu-items/20.png",
+                image: "/images/menu-items/chocolate-cake.png",
                 variants: [
-                    { id: "cake-chocolate", name: "Chocolate Truffle", price: 15000, image: "/images/menu-items/20.png" },
-                    { id: "cake-red-velvet", name: "Red Velvet", price: 15000, image: "/images/menu-items/20.png" },
+                    { id: "cake-chocolate", name: "Chocolate Truffle", price: 15000, image: "/images/menu-items/chocolate-cake.png" },
+                    { id: "cake-red-velvet", name: "Red Velvet", price: 15000, image: "/images/menu-items/red-velvet.png" },
+                    { id: "cake-black-forest", name: "Black Forest", price: 15000, image: "/images/menu-items/black-forest.png" },
+                    { id: "cake-vanilla", name: "Vanilla", price: 15000, image: "/images/menu-items/vanilla-cake.png" },
                 ]
             },
+
             {
-                id: "waffles-bakery",
+                id: "waffles",
                 name: "Waffles",
-                description: "Hot crispy waffles",
-                price: 15000,
-                image: "/images/menu-items/21.png",
+                description: "Choose From Our Selection Of Toppings And Sauces (Honey, Chocolate sauce, Caramel sauce, Strawberry sauce, Vanilla sauce, Peanut butter, Jam, Nutella). Toppings: Strawberry, Banana, Blueberry, Sprinkles, Chocolate chips, Chocolate flakes",
+                price: 10000,
+                image: "/images/menu-items/waffle-chocolate.png",
                 variants: [
-                    { id: "waffle-nutella", name: "Nutella Waffle", price: 15000, image: "/images/menu-items/21.png" },
-                    { id: "waffle-honey", name: "Honey Butter", price: 15000, image: "/images/menu-items/21.png" },
-                ]
-            },
-            {
-                id: "pastries",
-                name: "Pastries",
-                description: "Flaky savory and sweet pastries",
-                price: 8000,
-                image: "/images/menu-items/22.png",
-                variants: [
-                    { id: "pastry-chicken", name: "Chicken Pie", price: 8000, image: "/images/menu-items/22.png" },
-                    { id: "pastry-veg", name: "Veg Puff", price: 5000, image: "/images/menu-items/22.png" },
+                    { id: "waffle-choco", name: "Chocolate Waffle", price: 12000, image: "/images/menu-items/waffle-chocolate.png" },
+                    { id: "waffle-straw", name: "Strawberry Waffle", price: 12000, image: "/images/menu-items/waffle-strawberry.png" }
                 ]
             },
             {
                 id: "pancakes",
                 name: "Pancakes",
-                description: "Fluffy pancakes stack",
-                price: 12000,
-                image: "/images/menu-items/23.png",
-                variants: [
-                    { id: "pancake-maple", name: "Maple Syrup", price: 12000, image: "/images/menu-items/23.png" },
-                    { id: "pancake-choco", name: "Chocolate Chip", price: 14000, image: "/images/menu-items/23.png" },
-                ]
+                description: "Choose From Our Selection Of Toppings And Sauces (Strawberry, Banana, Blueberry, Sprinkles, Chocolate chips, Chocolate flakes, Honey, Chocolate sauce, Caramel sauce...)",
+                price: 10000,
+                image: "/images/menu-items/pancakes.png"
             },
             {
                 id: "crepes",
                 name: "Crepes",
-                description: "Thin french pancakes",
+                description: "Choose From Our Selection Of Toppings And Sauces (Strawberry, Banana, Blueberry, Sprinkles, Chocolate chips, Chocolate flakes...)",
                 price: 12000,
-                image: "/images/menu-items/24.png",
+                image: "/images/menu-items/crepes.png",
                 variants: [
-                    { id: "crepe-sweet", name: "Sweet Crepe", price: 12000, image: "/images/menu-items/24.png" },
-                    { id: "crepe-savory", name: "Savory Crepe", price: 14000, image: "/images/menu-items/24.png" },
+                    { id: "crepe-sweet", name: "Sweet Crepe", price: 12000, image: "/images/menu-items/crepes.png" },
+                    { id: "crepe-savory", name: "Savory Crepe", price: 14000, image: "/images/menu-items/crepes.png" },
+                ]
+            },
+            {
+                id: "donuts",
+                name: "Donuts",
+                description: "Freshly glazed donuts",
+                price: 8000,
+                image: "/images/menu-items/donut-chocolate.png",
+                variants: [
+                    { id: "donut-chocolate", name: "Chocolate Donut", price: 8000, image: "/images/menu-items/donut-chocolate.png" },
+                    { id: "donut-strawberry", name: "Strawberry Iced Donut", price: 8000, image: "/images/menu-items/donut-strawberry.png" },
+                    { id: "donut-orange", name: "Orange Iced Donut", price: 8000, image: "/images/menu-items/donut-orange.png" },
+                    { id: "donut-sugar", name: "Sugar Iced Donut", price: 8000, image: "/images/menu-items/donut-sugar.png" },
                 ]
             }
+
         ]
     }
 }

@@ -27,71 +27,81 @@ export function HeroSlider() {
             title: (
                 <>
                     Believe In Love
-                    <span className="block text-brandBlue">at First Bite</span>
+                    <span className="block text-brandPeach">at First Bite</span>
                 </>
             ),
             description:
                 "Handcrafted premium ice cream made with 100% milk cream. Experience enchanting flavors that will delight your taste buds.",
-            image: "/images/hero/hero-pink-cone.png",
+            image: "/images/hero-new/slide1.png",
             ctaPrimary: { text: "View Our Menu", href: "/menu" },
             ctaSecondary: { text: "Call Us", href: "tel:+256753522992", icon: Phone },
-            bg: "bg-gradient-to-b from-pink-100 via-pink-50 to-cream",
+            bg: "bg-[#a54c9d]",
+            textColor: "text-white",
+            descColor: "text-white/90"
         },
         {
             id: 2,
             title: (
                 <>
                     Create Your Own
-                    <span className="block text-brandBlue">Mix Magic</span>
+                    <span className="block text-brandPeach">Mix Magic</span>
                 </>
             ),
             description:
                 "Be the chef! Choose your base, pick your favorite flavors, and pile on the toppings. Your dream dessert awaits.",
-            image: "/images/hero/hero-double-chocolate-cone.png",
+            image: "/images/hero-new/slide2.png",
             ctaPrimary: { text: "Start Building", href: "/mix-builder" },
-            bg: "bg-gradient-to-br from-brandPeach/20 via-pink-50 to-brandBlue/10",
+            bg: "bg-[#a54c9d]",
+            textColor: "text-white",
+            descColor: "text-white/90"
         },
         {
             id: 3,
             title: (
                 <>
                     Layers of
-                    <span className="block text-brandBlue">Happiness</span>
+                    <span className="block text-brandPeach">Happiness</span>
                 </>
             ),
             description:
                 "From our famous Jar Sundaes to our loaded Triple Sundaes. Every layer is packed with joy.",
-            image: "/images/menu-items/triple-sundae.png",
+            image: "/images/hero-new/slide3.png",
             ctaPrimary: { text: "Order Sundaes", href: "/menu" },
-            bg: "bg-gradient-to-b from-cream to-pink-50",
+            bg: "bg-[#a54c9d]",
+            textColor: "text-white",
+            descColor: "text-white/90"
         },
         {
             id: 4,
             title: (
                 <>
                     Sip on
-                    <span className="block text-brandBlue">Pure Delight</span>
+                    <span className="block text-brandPeach">Pure Delight</span>
                 </>
             ),
             description:
                 "Refreshing milkshakes and thick shakes made from our premium ice cream. The perfect treat for any day.",
-            image: "/images/menu-items/milkshake-chocolate.png",
+            image: "/images/hero-new/slide4.png",
             ctaPrimary: { text: "Order Now", href: "/menu" },
-            bg: "bg-gradient-to-b from-blue-50 to-pink-50",
+            bg: "bg-[#a54c9d]",
+            textColor: "text-white",
+            descColor: "text-white/90"
         },
         {
             id: 5,
             title: (
                 <>
                     Cone or Cup?
-                    <span className="block text-brandBlue">Your Choice!</span>
+                    <span className="block text-brandPeach">Your Choice!</span>
                 </>
             ),
             description:
                 "Enjoy our rich, creamy scoops in a crispy waffle cone or a classic cup. Happiness in every serving.",
-            image: "/images/hero/scoop-dual-berry-vanilla.png",
+            image: "/images/hero-new/slide5.png",
             ctaPrimary: { text: "View Flavors", href: "/menu" },
-            bg: "bg-gradient-to-br from-cream via-orange-50 to-pink-50",
+            bg: "bg-[#a54c9d]",
+            textColor: "text-white",
+            descColor: "text-white/90"
         },
     ]
 
@@ -118,10 +128,14 @@ export function HeroSlider() {
                                             whileInView={{ opacity: 1, y: 0 }}
                                             transition={{ duration: 0.5, delay: 0.2 }}
                                         >
-                                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-brandCocoa mb-4 leading-tight">
+                                            <h1 className={`text-4xl md:text-5xl lg:text-6xl font-serif font-bold ${
+                                                // @ts-ignore
+                                                slide.textColor || "text-brandCocoa"} mb-4 leading-tight`}>
                                                 {slide.title}
                                             </h1>
-                                            <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-lg mx-auto md:mx-0">
+                                            <p className={`text-lg md:text-xl ${
+                                                // @ts-ignore
+                                                slide.descColor || "text-gray-600"} mb-8 max-w-lg mx-auto md:mx-0`}>
                                                 {slide.description}
                                             </p>
 

@@ -75,12 +75,21 @@ export async function getBakeryToppings(): Promise<BakeryTopping[]> {
     return [
         { id: "tp-nutella", name: "Nutella", price: 2000 },
         { id: "tp-honey", name: "Honey", price: 1500 },
-        { id: "tp-strawberry", name: "Strawberry", price: 1500 },
+        { id: "tp-choc-sauce", name: "Chocolate Sauce", price: 1500 },
+        { id: "tp-caramel", name: "Caramel Sauce", price: 1500 },
+        { id: "tp-straw-sauce", name: "Strawberry Sauce", price: 1500 },
+        { id: "tp-vanilla-sauce", name: "Vanilla Sauce", price: 1500 },
+        { id: "tp-pb", name: "Peanut Butter", price: 1500 },
+        { id: "tp-jam-straw", name: "Strawberry Jam", price: 1000 },
+        { id: "tp-jam-mix", name: "Mixed Fruit Jam", price: 1000 },
+        { id: "tp-strawberry", name: "Fresh Strawberry", price: 2000 },
         { id: "tp-banana", name: "Banana", price: 1000 },
+        { id: "tp-blueberry", name: "Blueberry", price: 2500 },
+        { id: "tp-sprinkles", name: "Sprinkles", price: 1000 },
         { id: "tp-choc-chips", name: "Chocolate Chips", price: 1500 },
-        { id: "tp-whip", name: "Whipped Cream", price: 1000 },
-        // Add more based on TOPPINGS in constants if needed
+        { id: "tp-choc-flakes", name: "Chocolate Flakes", price: 1500 },
     ];
+
 }
 
 export async function initializeDefaultData() {

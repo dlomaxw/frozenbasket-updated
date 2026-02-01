@@ -36,12 +36,13 @@ export default function HomePage() {
         <HeroSlider />
 
         {/* Menu Preview */}
-        <section className="py-16 px-4 bg-gradient-to-b from-cream to-pink-50">
+        {/* Menu Preview */}
+        <section className="py-16 px-4 bg-[#a54c9d]">
           <div className="max-w-6xl mx-auto text-center">
-            <h2 data-aos="fade-up" className="text-3xl md:text-4xl font-serif font-bold text-brandCocoa mb-4">
+            <h2 data-aos="fade-up" className="text-3xl md:text-4xl font-serif font-bold text-white mb-4">
               Weekly Picks - Staff's Recommendations
             </h2>
-            <p data-aos="fade-up" data-aos-delay="100" className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+            <p data-aos="fade-up" data-aos-delay="100" className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
               Explore our wide range of sundaes, bars, waffle cones, and specialty treats
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
