@@ -109,7 +109,7 @@ export default function BakeryOrderPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#fff0f5]">
       {/* Header */}
       <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-b">
         <div className="max-w-4xl mx-auto px-4 py-4">
@@ -140,15 +140,15 @@ export default function BakeryOrderPage() {
               <Croissant size={14} />
               Bakery
             </div>
-            <h1 className="text-3xl font-serif font-bold text-brandCocoa mb-2">{product.name}</h1>
+            <h1 className="text-4xl font-serif font-bold text-brandCocoa mb-2">{product.name}</h1>
             <p className="text-muted-foreground mb-4">{product.description}</p>
-            <p className="text-2xl font-bold text-amber-600 mb-6">
+            <p className="text-3xl font-bold text-amber-600 mb-6">
               Base Price: {(product.price / 1000).toFixed(0)}k UGX
             </p>
 
             {/* Toppings Selection */}
             <div className="mb-6">
-              <h3 className="font-bold text-lg text-brandCocoa mb-3">Choose Your Toppings</h3>
+              <h3 className="font-bold text-xl text-brandCocoa mb-3">Choose Your Toppings</h3>
               <p className="text-sm text-muted-foreground mb-4">Select as many as you like!</p>
               <div className="grid grid-cols-2 gap-3">
                 {availableToppings.map((topping) => (
@@ -156,13 +156,13 @@ export default function BakeryOrderPage() {
                     key={topping.id}
                     onClick={() => toggleTopping(topping)}
                     className={`flex items-center justify-between p-3 rounded-xl border-2 transition-all ${isToppingSelected(topping.id)
-                        ? "border-amber-500 bg-amber-50"
-                        : "border-border hover:border-amber-300"
+                      ? "border-amber-500 bg-amber-50"
+                      : "border-border hover:border-amber-300"
                       }`}
                   >
-                    <span className="font-medium text-sm">{topping.name}</span>
+                    <span className="font-medium text-base">{topping.name}</span>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-sm text-muted-foreground">
                         +{(topping.price / 1000).toFixed(1)}k
                       </span>
                       {isToppingSelected(topping.id) && (
@@ -215,12 +215,12 @@ export default function BakeryOrderPage() {
             <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-xl p-4 mb-6">
               <div className="flex justify-between items-center">
                 <span className="font-medium text-amber-800">Total:</span>
-                <span className="text-2xl font-bold text-amber-700">
+                <span className="text-3xl font-bold text-amber-700">
                   {(calculateTotal() / 1000).toFixed(0)}k UGX
                 </span>
               </div>
               {selectedToppings.length > 0 && (
-                <p className="text-xs text-amber-600 mt-1">
+                <p className="text-sm text-amber-600 mt-1">
                   Base ({(product.price / 1000).toFixed(0)}k) + Toppings (
                   {(selectedToppings.reduce((sum, t) => sum + t.price, 0) / 1000).toFixed(1)}k) x {quantity}
                 </p>
@@ -232,8 +232,8 @@ export default function BakeryOrderPage() {
               onClick={handleAddToCart}
               disabled={addedToCart}
               className={`w-full py-6 text-lg font-bold rounded-full transition-all ${addedToCart
-                  ? "bg-green-500 hover:bg-green-500"
-                  : "bg-amber-500 hover:bg-amber-600"
+                ? "bg-green-500 hover:bg-green-500"
+                : "bg-amber-500 hover:bg-amber-600"
                 }`}
             >
               {addedToCart ? (

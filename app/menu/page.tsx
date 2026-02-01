@@ -77,7 +77,7 @@ function MenuContent() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fcfcfc] font-sans">
+    <div className="min-h-screen flex flex-col bg-[#fff0f5] font-sans">
       <SiteHeader cartCount={cartCount} />
 
       {/* Breadcrumb / Navigation Bar - Sticky & Prominent */}
@@ -129,7 +129,7 @@ function MenuContent() {
         {viewState === "categories" && (
           <div className="animate-fadeIn">
             <div data-aos="fade-down" className="text-center mb-12">
-              <h1 className="text-4xl font-bold text-[#2c3e50] uppercase tracking-wider mb-2 font-serif">
+              <h1 className="text-5xl font-bold text-[#2c3e50] uppercase tracking-wider mb-2 font-serif">
                 Welcome to Frozen Basket
               </h1>
               <p className="text-gray-500 max-w-2xl mx-auto text-sm leading-relaxed tracking-wide">
@@ -156,7 +156,7 @@ function MenuContent() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
                   <div className="p-6 flex-grow flex flex-col items-center justify-center text-center bg-white border-t border-gray-50">
-                    <h3 className="text-lg font-extrabold text-[#2c3e50] uppercase tracking-wide group-hover:text-[var(--purple-bg)] transition-colors duration-300">
+                    <h3 className="text-xl font-extrabold text-[#2c3e50] uppercase tracking-wide group-hover:text-[var(--purple-bg)] transition-colors duration-300">
                       {cat.label}
                     </h3>
                     <div className="h-0.5 w-8 bg-gray-200 mt-4 mb-3 group-hover:w-16 group-hover:bg-[var(--pink-highlight)] transition-all duration-300" />
@@ -171,7 +171,7 @@ function MenuContent() {
         {viewState === "families" && activeCategory && (
           <div className="animate-fadeIn">
             <div data-aos="fade-down" className="text-center mb-10 border-b pb-8 border-gray-100">
-              <h2 className="text-3xl font-extrabold text-[#2c3e50] uppercase tracking-wider font-serif">
+              <h2 className="text-4xl font-extrabold text-[#2c3e50] uppercase tracking-wider font-serif">
                 {getCategoryTitle(activeCategory)}
               </h2>
               <div className="w-12 h-1 bg-[var(--purple-bg)] mx-auto mt-4 rounded-full" />
@@ -203,11 +203,11 @@ function MenuContent() {
                     )}
                   </div>
                   <div className="p-5 flex flex-col flex-grow">
-                    <h3 className="text-sm font-bold text-[#2c3e50] uppercase mb-2 line-clamp-2 min-h-[2.5rem] tracking-tight">
+                    <h3 className="text-lg font-bold text-[#2c3e50] uppercase mb-2 line-clamp-2 min-h-[2.5rem] tracking-tight">
                       {item.name}
                     </h3>
                     {item.description && (
-                      <p className="text-xs text-gray-500 mb-4 line-clamp-2 flex-grow leading-relaxed">
+                      <p className="text-sm text-gray-500 mb-4 line-clamp-2 flex-grow leading-relaxed">
                         {item.description}
                       </p>
                     )}
@@ -230,7 +230,7 @@ function MenuContent() {
         {viewState === "variants" && activeFamily && (
           <div className="animate-fadeIn">
             <div data-aos="fade-down" className="text-center mb-10 border-b pb-8 border-gray-100">
-              <h2 className="text-3xl font-extrabold text-[#2c3e50] uppercase tracking-wider font-serif">
+              <h2 className="text-4xl font-extrabold text-[#2c3e50] uppercase tracking-wider font-serif">
                 {activeFamily.name}
               </h2>
               <div className="w-12 h-1 bg-[var(--purple-bg)] mx-auto mt-4 rounded-full" />
@@ -284,7 +284,7 @@ function MenuContent() {
 
 export default function MenuPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#fcfcfc]" />}>
+    <Suspense fallback={<div className="min-h-screen bg-[#fff0f5]" />}>
       <MenuContent />
     </Suspense>
   )
@@ -305,18 +305,18 @@ function ProductCard({ title, price, image, description, onView }: { title: stri
         />
       </div>
       <div className="p-5 flex flex-col flex-grow">
-        <h3 className="text-sm font-bold text-[#2c3e50] uppercase mb-2 line-clamp-2 min-h-[2.5rem] tracking-tight">
+        <h3 className="text-lg font-bold text-[#2c3e50] uppercase mb-2 line-clamp-2 min-h-[2.5rem] tracking-tight">
           {title}
         </h3>
 
         {description && (
-          <p className="text-xs text-gray-500 mb-4 line-clamp-3 leading-relaxed">
+          <p className="text-sm text-gray-500 mb-4 line-clamp-3 leading-relaxed">
             {description}
           </p>
         )}
 
         <div className="mt-auto border-t border-gray-50 pt-4 text-center">
-          <span className="text-brandBlue font-bold text-lg">{price} UGX</span>
+          <span className="text-brandBlue font-bold text-xl">{price} UGX</span>
         </div>
       </div>
     </div>
