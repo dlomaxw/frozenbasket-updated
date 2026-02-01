@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react"
 import { FLAVORS } from "@/lib/constants"
 import type { Flavor } from "@/lib/types"
-import { Search, Plus, IceCream, Sparkles, Croissant } from "lucide-react"
-import { getProductTypes, getBakeryProducts, initializeDefaultData, forceUpdateAllImages, type ProductType, type BakeryProduct } from "@/lib/local-api"
+import { Search, Plus, IceCream, Sparkles, Croissant, ArrowLeft, X } from "lucide-react"
+import { getProductTypes, getBakeryProducts, getDrinksProducts, initializeDefaultData, forceUpdateAllImages, type ProductType, type BakeryProduct } from "@/lib/local-api"
 import Link from "next/link"
 
 interface MenuGridProps {
@@ -18,8 +18,11 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
   const [search, setSearch] = useState("")
   const [mixProducts, setMixProducts] = useState<ProductType[]>([])
   const [bakeryProducts, setBakeryProducts] = useState<BakeryProduct[]>([])
+  const [drinksProducts, setDrinksProducts] = useState<BakeryProduct[]>([])
   const [loadingProducts, setLoadingProducts] = useState(true)
   const [loadingBakery, setLoadingBakery] = useState(true)
+  const [loadingDrinks, setLoadingDrinks] = useState(true)
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
 
   // Fetch products from Firebase
   useEffect(() => {
@@ -47,10 +50,18 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
           setBakeryProducts(bakery)
         }
         setLoadingBakery(false)
+
+        // Fetch drinks products
+        const drinks = await getDrinksProducts()
+        if (drinks.length > 0) {
+          setDrinksProducts(drinks)
+        }
+        setLoadingDrinks(false)
       } catch (err) {
         console.error("[v0] Failed to fetch products:", err)
         setLoadingProducts(false)
         setLoadingBakery(false)
+        setLoadingDrinks(false)
       }
     }
 
@@ -68,11 +79,19 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
   )
 
   return (
-    <div className="bg-background min-h-screen py-12">
+    <div className="bg-background min-h-screen py-12 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
+        {/* Back Button */}
+        <div className="mb-8 sticky top-4 z-40">
+          <Link href="/" className="inline-flex items-center bg-white/90 backdrop-blur-md text-brandBlue hover:text-brandBlue/80 font-bold py-2 px-4 rounded-full shadow-md transition-all hover:scale-105 border border-brandBlue/10">
+            <ArrowLeft className="mr-2" size={20} />
+            Back to Home
+          </Link>
+        </div>
+
         {/* SECTION 1: Mix Builder Products (12 Products from Database) */}
-        <section className="mb-20">
+        <section id="mix-builder" className="mb-20 scroll-mt-24">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-brandPeach/20 text-brandPeach px-4 py-2 rounded-full text-sm font-bold mb-4">
               <Sparkles size={16} />
@@ -95,7 +114,10 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
                   key={product.id}
                   className="group bg-cream rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-transparent hover:border-brandPeach/30"
                 >
-                  <div className="relative h-56 overflow-hidden bg-gradient-to-br from-brandPeach/20 to-brandBlue/10">
+                  <div
+                    className="relative h-56 overflow-hidden bg-gradient-to-br from-brandPeach/20 to-brandBlue/10 cursor-pointer"
+                    onClick={() => setSelectedImage(product.image || "/placeholder.svg?height=300&width=300")}
+                  >
                     <img
                       src={product.image || "/placeholder.svg?height=300&width=300"}
                       alt={product.name}
@@ -107,17 +129,9 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
                   </div>
                   <div className="p-5 flex flex-col flex-grow">
                     <h3 className="font-serif font-bold text-xl text-brandCocoa mb-2">{product.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                    <p className="text-lg text-muted-foreground mb-4 line-clamp-3">
                       {product.description || "Customize this delicious treat!"}
                     </p>
-                    <div className="mt-auto">
-                      <Link
-                        href={`/mix-builder?product=${product.id}`}
-                        className="block w-full bg-brandBlue text-white text-center font-bold py-2.5 px-4 rounded-full hover:bg-brandBlue/90 transition-colors shadow-md text-sm"
-                      >
-                        Customize Now
-                      </Link>
-                    </div>
                   </div>
                 </div>
               ))}
@@ -142,7 +156,7 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
         </div>
 
         {/* SECTION 2: Ice Cream Flavors (24 Flavors from Constants) */}
-        <section>
+        <section id="flavors" className="scroll-mt-24">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-brandBlue/10 text-brandBlue px-4 py-2 rounded-full text-sm font-bold mb-4">
               <IceCream size={16} />
@@ -161,8 +175,8 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
                   className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${activeCategory === cat
-                      ? "bg-brandBlue text-white"
-                      : "bg-muted text-muted-foreground hover:bg-muted/80"
+                    ? "bg-brandBlue text-white"
+                    : "bg-muted text-muted-foreground hover:bg-muted/80"
                     }`}
                 >
                   {cat}
@@ -188,7 +202,10 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
                 key={flavor.id}
                 className="group bg-cream rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-transparent hover:border-brandPeach/30"
               >
-                <div className="relative h-64 overflow-hidden bg-muted">
+                <div
+                  className="relative h-64 overflow-hidden bg-muted cursor-pointer"
+                  onClick={() => setSelectedImage(flavor.image || "/placeholder.svg")}
+                >
                   <img
                     src={flavor.image || "/placeholder.svg"}
                     alt={flavor.name}
@@ -197,21 +214,14 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
                   <div className="absolute top-3 right-3 bg-white/90 backdrop-blur px-2 py-1 rounded-md text-xs font-bold text-brandBlue uppercase tracking-wider">
                     {flavor.category}
                   </div>
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <button
-                      onClick={() => onAddQuick(flavor)}
-                      className="bg-white text-brandBlue font-bold py-3 px-6 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 flex items-center gap-2 shadow-lg"
-                    >
-                      <Plus size={18} /> Quick Add
-                    </button>
-                  </div>
+                  <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
                 <div className="p-5 flex flex-col flex-grow">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-serif font-bold text-xl text-brandCocoa leading-tight">{flavor.name}</h3>
                     <span className="font-bold text-brandBlue text-lg">{(flavor.price / 1000).toFixed(1)}k</span>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{flavor.description}</p>
+                  <p className="text-lg text-muted-foreground mb-4 line-clamp-3">{flavor.description}</p>
 
                   <div className="mt-auto">
                     <div className="flex flex-wrap gap-1 mb-3">
@@ -260,7 +270,7 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
         </div>
 
         {/* SECTION 3: Bakery Products */}
-        <section className="mb-20">
+        <section id="bakery" className="mb-20 scroll-mt-24">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-amber-100 text-amber-700 px-4 py-2 rounded-full text-sm font-bold mb-4">
               <Croissant size={16} />
@@ -283,7 +293,10 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
                   key={product.id}
                   className="group bg-cream rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-transparent hover:border-amber-300/50"
                 >
-                  <div className="relative h-64 overflow-hidden bg-gradient-to-br from-amber-50 to-orange-50">
+                  <div
+                    className="relative h-64 overflow-hidden bg-gradient-to-br from-amber-50 to-orange-50 cursor-pointer"
+                    onClick={() => setSelectedImage(product.image || "/placeholder.svg?height=300&width=300")}
+                  >
                     <img
                       src={product.image || "/placeholder.svg?height=300&width=300"}
                       alt={product.name}
@@ -298,7 +311,7 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
                   </div>
                   <div className="p-6 flex flex-col flex-grow">
                     <h3 className="font-serif font-bold text-2xl text-brandCocoa mb-2">{product.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-4">
+                    <p className="text-lg text-muted-foreground mb-4">
                       {product.description || "Delicious bakery treat with your choice of toppings!"}
                     </p>
                     <div className="mt-auto">
@@ -315,12 +328,6 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
                           +4 more
                         </span>
                       </div>
-                      <Link
-                        href={`/bakery/${product.id}`}
-                        className="block w-full bg-amber-500 text-white text-center font-bold py-3 px-6 rounded-full hover:bg-amber-600 transition-colors shadow-md"
-                      >
-                        Order Now
-                      </Link>
                     </div>
                   </div>
                 </div>
@@ -334,7 +341,96 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
             </div>
           )}
         </section>
+
+        {/* Divider for Drinks */}
+        <div className="flex items-center gap-4 my-16">
+          <div className="flex-1 h-px bg-border"></div>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <IceCream size={20} />
+            <span className="font-medium">Refreshing Drinks</span>
+          </div>
+          <div className="flex-1 h-px bg-border"></div>
+        </div>
+
+        {/* SECTION 4: Drinks Products */}
+        <section id="drinks" className="mb-20 scroll-mt-24">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-bold mb-4">
+              <IceCream size={16} />
+              Milkshakes & Thick Shakes
+            </div>
+            <h2 className="text-4xl font-serif font-bold text-brandBlue mb-4">Shakes & Drinks</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Cool off with our creamy Milkshakes and rich Thick Shakes. Available in a variety of delicious flavors!
+            </p>
+          </div>
+
+          {loadingDrinks ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {drinksProducts.map((product) => (
+                <div
+                  key={product.id}
+                  className="group bg-cream rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-transparent hover:border-purple-300/50"
+                >
+                  <div
+                    className="relative h-64 overflow-hidden bg-gradient-to-br from-purple-50 to-pink-50 cursor-pointer"
+                    onClick={() => setSelectedImage(product.image || "/placeholder.svg?height=300&width=300")}
+                  >
+                    <img
+                      src={product.image || "/placeholder.svg?height=300&width=300"}
+                      alt={product.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute top-3 left-3 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-md uppercase tracking-wider">
+                      Drinks
+                    </div>
+                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur text-purple-700 px-3 py-1 rounded-full text-sm font-bold shadow-md">
+                      {(Number(product.price) / 1000).toFixed(0)}k UGX
+                    </div>
+                  </div>
+                  <div className="p-6 flex flex-col flex-grow">
+                    <h3 className="font-serif font-bold text-2xl text-brandCocoa mb-2">{product.name}</h3>
+                    <p className="text-lg text-muted-foreground mb-4">
+                      {product.description || "Delicious shake!"}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {!loadingDrinks && drinksProducts.length === 0 && (
+            <div className="text-center py-12 text-muted-foreground">
+              <p className="text-lg">No drinks available at the moment.</p>
+            </div>
+          )}
+        </section>
       </div>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={() => setSelectedImage(null)}>
+          <div className="relative max-w-4xl w-full max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl p-2" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 z-10 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+            >
+              <X size={24} />
+            </button>
+            <div className="relative h-[80vh] w-full">
+              <img
+                src={selectedImage}
+                alt="Product View"
+                className="w-full h-full object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

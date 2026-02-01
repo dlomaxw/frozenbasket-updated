@@ -5,17 +5,21 @@ import { useState } from "react"
 import Image from "next/image"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import { ChevronRight } from "lucide-react"
+import { ChevronRight, ChevronLeft } from "lucide-react"
 import { useCartStore } from "@/lib/cart-store"
 import { useRouter, useSearchParams } from "next/navigation"
 
 import { MENU_CATEGORIES } from "@/lib/menu-data"
+
+import { X } from "lucide-react"
 
 function MenuContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const activeCategory = searchParams.get("category")
   const activeFamilyId = searchParams.get("family")
+
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
 
   const { getItemCount } = useCartStore()
   const cartCount = getItemCount()
@@ -76,22 +80,32 @@ function MenuContent() {
     <div className="min-h-screen flex flex-col bg-[#fcfcfc] font-sans">
       <SiteHeader cartCount={cartCount} />
 
-      {/* Breadcrumb / Navigation Bar */}
-      <div className="bg-white border-b border-gray-200 py-3 shadow-sm sticky top-16 z-10 transition-all duration-300">
+      {/* Breadcrumb / Navigation Bar - Sticky & Prominent */}
+      <div className="bg-white/95 backdrop-blur-md border-b border-gray-200 py-4 shadow-md sticky top-24 z-40 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 flex items-center text-sm font-bold tracking-widest text-[#2c3e50] overflow-x-auto whitespace-nowrap">
+          {activeCategory && (
+            <button
+              onClick={() => activeFamily ? handleBackToFamilies() : handleBackToCategories()}
+              className="mr-2 p-1.5 rounded-full text-[var(--purple-bg)] bg-purple-50 hover:bg-[var(--purple-bg)] hover:text-white transition-colors"
+              aria-label="Go Back"
+            >
+              <ChevronLeft size={18} />
+            </button>
+          )}
+
           <button
             onClick={handleBackToCategories}
-            className="hover:text-[var(--purple-bg)] transition-colors flex items-center gap-1"
+            className={`px-3 py-1.5 rounded-full transition-colors font-bold ${!activeCategory ? "text-[var(--purple-bg)] bg-purple-50" : "text-gray-500 hover:text-[var(--purple-bg)] hover:bg-gray-50 bg-white border border-gray-200 hover:border-[var(--purple-bg)]"}`}
           >
             MENU
           </button>
 
           {activeCategory && (
             <>
-              <ChevronRight size={14} className="mx-2 text-gray-400" />
+              <ChevronRight size={16} className="text-gray-400 mx-1" />
               <button
                 onClick={activeFamily ? handleBackToFamilies : undefined}
-                className={`uppercase ${activeFamily ? "hover:text-[var(--purple-bg)] transition-colors" : "text-[var(--purple-bg)]"}`}
+                className={`uppercase px-3 py-1.5 rounded-full transition-colors ${!activeFamily ? "text-[var(--purple-bg)] bg-purple-50" : "text-gray-500 hover:text-[var(--purple-bg)] hover:bg-gray-50"}`}
               >
                 {getCategoryTitle(activeCategory).replace("BIG ON ", "").replace("PERFECTED ", "").replace("REFRESHING ", "").replace("GENEROUS ", "")}
               </button>
@@ -100,8 +114,8 @@ function MenuContent() {
 
           {activeFamily && (
             <>
-              <ChevronRight size={14} className="mx-2 text-gray-400" />
-              <span className="text-[var(--purple-bg)] uppercase">
+              <ChevronRight size={16} className="text-gray-400 mx-1" />
+              <span className="text-[var(--purple-bg)] uppercase bg-purple-50 px-3 py-1.5 rounded-full">
                 {activeFamily.name}
               </span>
             </>
@@ -119,7 +133,7 @@ function MenuContent() {
                 Welcome to Frozen Basket
               </h1>
               <p className="text-gray-500 max-w-2xl mx-auto text-sm leading-relaxed tracking-wide">
-                Everything from our Big on Ice Cream, Perfected Sundaes, Decadent Bakery to your Generous Drinks. Right here at your fingertips. ORDER NOW.
+                Everything from our Big on Ice Cream, Perfected Sundaes, Decadent Bakery to your Generous Drinks. Right here at your fingertips.
               </p>
             </div>
 
@@ -233,6 +247,7 @@ function MenuContent() {
                     price={variant.price.toLocaleString()}
                     image={variant.image || activeFamily.image}
                     description={variant.description || activeFamily.description}
+                    onView={() => setSelectedImage(variant.image || activeFamily.image)}
                   />
                 </div>
               ))}
@@ -242,6 +257,27 @@ function MenuContent() {
 
       </main>
       <SiteFooter />
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={() => setSelectedImage(null)}>
+          <div className="relative max-w-4xl w-full max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl p-2" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 z-10 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+            >
+              <X size={24} />
+            </button>
+            <div className="relative h-[80vh] w-full">
+              <img
+                src={selectedImage}
+                alt="Product View"
+                className="w-full h-full object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -254,9 +290,12 @@ export default function MenuPage() {
   )
 }
 
-function ProductCard({ title, price, image, description }: { title: string; price: string; image: string; description?: string }) {
+function ProductCard({ title, price, image, description, onView }: { title: string; price: string; image: string; description?: string; onView?: () => void }) {
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col h-full group">
+    <div
+      className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col h-full group cursor-pointer"
+      onClick={onView}
+    >
       <div className="relative aspect-[4/3] w-full bg-gray-50 overflow-hidden">
         <Image
           src={image}
@@ -276,13 +315,8 @@ function ProductCard({ title, price, image, description }: { title: string; pric
           </p>
         )}
 
-        <div className="mt-auto border-t border-gray-50 pt-4">
-          <div className="text-[#8e8e8e] text-sm font-semibold mb-3">
-            {price} UGX
-          </div>
-          <button className="w-full bg-[#527a29] hover:bg-[#456822] text-white text-xs font-bold py-3 px-4 rounded-sm uppercase tracking-widest transition-colors shadow-sm active:transform active:scale-95 duration-150">
-            ORDER
-          </button>
+        <div className="mt-auto border-t border-gray-50 pt-4 text-center">
+          <span className="text-brandBlue font-bold text-lg">{price} UGX</span>
         </div>
       </div>
     </div>

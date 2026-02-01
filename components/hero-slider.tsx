@@ -39,22 +39,7 @@ export function HeroSlider() {
             textColor: "text-white",
             descColor: "text-white/90"
         },
-        {
-            id: 2,
-            title: (
-                <>
-                    Create Your Own
-                    <span className="block text-brandPeach">Mix Magic</span>
-                </>
-            ),
-            description:
-                "Be the chef! Choose your base, pick your favorite flavors, and pile on the toppings. Your dream dessert awaits.",
-            image: "/images/hero-new/slide2.png",
-            ctaPrimary: { text: "Start Building", href: "/mix-builder" },
-            bg: "bg-[#a54c9d]",
-            textColor: "text-white",
-            descColor: "text-white/90"
-        },
+
         {
             id: 3,
             title: (
@@ -66,7 +51,7 @@ export function HeroSlider() {
             description:
                 "From our famous Jar Sundaes to our loaded Triple Sundaes. Every layer is packed with joy.",
             image: "/images/hero-new/slide3.png",
-            ctaPrimary: { text: "Order Sundaes", href: "/menu" },
+            ctaPrimary: { text: "View Sundaes", href: "/menu" },
             bg: "bg-[#a54c9d]",
             textColor: "text-white",
             descColor: "text-white/90"
@@ -82,7 +67,7 @@ export function HeroSlider() {
             description:
                 "Refreshing milkshakes and thick shakes made from our premium ice cream. The perfect treat for any day.",
             image: "/images/hero-new/slide4.png",
-            ctaPrimary: { text: "Order Now", href: "/menu" },
+            ctaPrimary: { text: "View Shakes", href: "/menu" },
             bg: "bg-[#a54c9d]",
             textColor: "text-white",
             descColor: "text-white/90"
@@ -150,7 +135,7 @@ export function HeroSlider() {
                                                 {slide.ctaSecondary && (
                                                     <a
                                                         href={slide.ctaSecondary.href}
-                                                        className="inline-flex items-center justify-center border-2 border-brandBlue text-brandBlue px-8 py-4 rounded-full font-semibold text-lg hover:bg-brandBlue/5 transition-all hover:scale-105"
+                                                        className="inline-flex items-center justify-center bg-brandBlue text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-brandBlue/90 transition-all hover:scale-105 shadow-lg"
                                                     >
                                                         {slide.ctaSecondary.icon && <slide.ctaSecondary.icon size={20} className="mr-2 animate-pulse" />}
                                                         {slide.ctaSecondary.text}
@@ -163,12 +148,15 @@ export function HeroSlider() {
                                     {/* Hero Image */}
                                     <div className="flex-1 relative animate-float w-full flex justify-center z-10">
                                         <motion.div
-                                            className="relative w-full max-w-md aspect-square"
+                                            className="relative w-full max-w-md aspect-square flex items-center justify-center"
                                             initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
                                             whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
                                             transition={{ duration: 0.8 }}
                                         >
-                                            <div className="relative w-full h-full animate-color-change">
+                                            {/* Decorative Circle Background */}
+                                            <div className="absolute w-[90%] h-[90%] bg-white/50 rounded-full blur-xl" />
+
+                                            <div className="relative w-full h-full z-10">
                                                 <Image
                                                     src={slide.image}
                                                     alt="Hero Slide"

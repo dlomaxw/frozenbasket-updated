@@ -47,18 +47,7 @@ export function SiteHeader({ cartCount = 0 }: SiteHeaderProps) {
           </div>
 
           <div className="flex items-center space-x-4">
-            <button
-              onClick={() => handleNav("/cart")}
-              className="relative p-2 text-brandCocoa hover:text-brandBlue transition-colors"
-              aria-label="Shopping cart"
-            >
-              <ShoppingBag size={24} />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-brandPeach text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                  {cartCount > 9 ? "9+" : cartCount}
-                </span>
-              )}
-            </button>
+
             <button className="md:hidden text-brandCocoa" onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? <X size={28} /> : <MenuIcon size={28} />}
             </button>
@@ -94,12 +83,7 @@ export function SiteHeader({ cartCount = 0 }: SiteHeaderProps) {
             >
               Contact
             </button>
-            <button
-              onClick={() => handleNav("/cart")}
-              className="block w-full text-left px-3 py-3 text-brandCocoa text-lg font-medium hover:bg-brandPeach/10 rounded-md"
-            >
-              Cart {cartCount > 0 && `(${cartCount})`}
-            </button>
+
           </div>
         </div>
       )}

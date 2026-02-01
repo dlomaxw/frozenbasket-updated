@@ -56,6 +56,19 @@ export async function getBakeryProducts(): Promise<BakeryProduct[]> {
     }));
 }
 
+export async function getDrinksProducts(): Promise<BakeryProduct[]> {
+    if (!MENU_CATEGORIES.drinks || !MENU_CATEGORIES.drinks.items) return [];
+
+    return MENU_CATEGORIES.drinks.items.map(item => ({
+        id: item.id,
+        name: item.name,
+        description: item.description,
+        price: item.price,
+        image: item.image,
+        variants: item.variants
+    }));
+}
+
 export async function getBakeryProduct(id: string): Promise<BakeryProduct | null> {
     if (!MENU_CATEGORIES.bakery || !MENU_CATEGORIES.bakery.items) return null;
 
