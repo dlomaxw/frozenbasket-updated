@@ -9,7 +9,7 @@ import { MapPin, Phone, Clock, Mail, MessageCircle, Send, Instagram, Facebook } 
 export default function ContactPage() {
   const { getItemCount } = useCartStore()
   const cartCount = getItemCount()
-  
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,10 +22,10 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
+
     // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 1000))
-    
+
     setSubmitted(true)
     setIsSubmitting(false)
     setFormData({ name: "", email: "", phone: "", message: "" })
@@ -39,7 +39,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-pink-50 to-cream">
+    <div className="min-h-screen flex flex-col bg-[#fff0f5]">
       <SiteHeader cartCount={cartCount} />
       <main className="flex-grow">
         {/* Header Section */}
@@ -99,9 +99,9 @@ export default function ContactPage() {
                   <MessageCircle size={28} className="text-green-600 group-hover:animate-bounce-slow" />
                 </div>
                 <h3 className="font-semibold text-brandCocoa mb-2">WhatsApp</h3>
-                <a 
-                  href="https://wa.me/256753522992" 
-                  target="_blank" 
+                <a
+                  href="https://wa.me/256753522992"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-green-600 hover:underline"
                 >
@@ -122,7 +122,7 @@ export default function ContactPage() {
                 <h2 className="text-2xl font-serif font-bold text-brandCocoa mb-6">
                   Send Us a Message
                 </h2>
-                
+
                 {submitted ? (
                   <div className="text-center py-8">
                     <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -154,7 +154,7 @@ export default function ContactPage() {
                         placeholder="John Doe"
                       />
                     </div>
-                    
+
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-brandCocoa mb-1">
                         Email Address
@@ -170,7 +170,7 @@ export default function ContactPage() {
                         placeholder="john@example.com"
                       />
                     </div>
-                    
+
                     <div>
                       <label htmlFor="phone" className="block text-sm font-medium text-brandCocoa mb-1">
                         Phone Number
@@ -185,7 +185,7 @@ export default function ContactPage() {
                         placeholder="+256 700 000 000"
                       />
                     </div>
-                    
+
                     <div>
                       <label htmlFor="message" className="block text-sm font-medium text-brandCocoa mb-1">
                         Your Message
@@ -201,7 +201,7 @@ export default function ContactPage() {
                         placeholder="How can we help you?"
                       />
                     </div>
-                    
+
                     <button
                       type="submit"
                       disabled={isSubmitting}
@@ -272,7 +272,7 @@ export default function ContactPage() {
                       aria-label="TikTok"
                     >
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
                       </svg>
                     </a>
                     <a
@@ -283,7 +283,7 @@ export default function ContactPage() {
                       aria-label="YouTube"
                     >
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
                       </svg>
                     </a>
                     <a

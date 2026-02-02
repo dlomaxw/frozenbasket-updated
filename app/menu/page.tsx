@@ -291,6 +291,22 @@ export default function MenuPage() {
 }
 
 function ProductCard({ title, price, image, description, onView }: { title: string; price: string; image: string; description?: string; onView?: () => void }) {
+  // Check for multi-pricing in description (e.g. "Small: 10,000 UGX | Mega: 15,000 UGX")
+  const priceRegex = /(Small:.*?UGX\s*\|\s*Mega:.*?UGX)/i
+  const match = description?.match(priceRegex)
+
+  let displayPrice = (
+    <span className="text-brandBlue font-bold text-xl">{price} UGX</span>
+  )
+  let displayDescription = description
+
+  if (match) {
+    // If multi-price found, use that as the price display (styled in blue)
+    // and remove it from the description
+    displayPrice = <span className="text-brandBlue font-bold text-sm md:text-base">{match[0]}</span>
+    displayDescription = description?.replace(match[0], "").trim()
+  }
+
   return (
     <div
       className="bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col h-full group cursor-pointer"
@@ -309,14 +325,14 @@ function ProductCard({ title, price, image, description, onView }: { title: stri
           {title}
         </h3>
 
-        {description && (
+        {displayDescription && (
           <p className="text-sm text-gray-500 mb-4 line-clamp-3 leading-relaxed">
-            {description}
+            {displayDescription}
           </p>
         )}
 
         <div className="mt-auto border-t border-gray-50 pt-4 text-center">
-          <span className="text-brandBlue font-bold text-xl">{price} UGX</span>
+          {displayPrice}
         </div>
       </div>
     </div>

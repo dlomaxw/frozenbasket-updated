@@ -52,6 +52,7 @@ export function HeroSlider() {
                 "From our famous Jar Sundaes to our loaded Triple Sundaes. Every layer is packed with joy.",
             image: "/images/hero-new/slide3.png",
             ctaPrimary: { text: "View Sundaes", href: "/menu" },
+            ctaSecondary: { text: "Call Us", href: "tel:+256753522992", icon: Phone },
             bg: "bg-[#a54c9d]",
             textColor: "text-white",
             descColor: "text-white/90"
@@ -68,6 +69,7 @@ export function HeroSlider() {
                 "Refreshing milkshakes and thick shakes made from our premium ice cream. The perfect treat for any day.",
             image: "/images/hero-new/slide4.png",
             ctaPrimary: { text: "View Shakes", href: "/menu" },
+            ctaSecondary: { text: "Call Us", href: "tel:+256753522992", icon: Phone },
             bg: "bg-[#a54c9d]",
             textColor: "text-white",
             descColor: "text-white/90"
@@ -84,6 +86,7 @@ export function HeroSlider() {
                 "Enjoy our rich, creamy scoops in a crispy waffle cone or a classic cup. Happiness in every serving.",
             image: "/images/hero-new/slide5.png",
             ctaPrimary: { text: "View Flavors", href: "/menu" },
+            ctaSecondary: { text: "Call Us", href: "tel:+256753522992", icon: Phone },
             bg: "bg-[#a54c9d]",
             textColor: "text-white",
             descColor: "text-white/90"

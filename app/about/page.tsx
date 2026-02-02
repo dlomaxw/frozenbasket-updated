@@ -15,7 +15,8 @@ interface AboutContent {
 }
 
 export default function AboutPage() {
-  const itemCount = useCartStore((state) => state.getItemCount())
+  const { getItemCount } = useCartStore()
+  const itemCount = getItemCount()
   const [content, setContent] = useState<AboutContent>({
     title: "About Frozen Basket",
     subtitle:
@@ -99,7 +100,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <SiteHeader cartCount={itemCount} />
-      <main className="flex-grow bg-cream overflow-hidden">
+      <main className="flex-grow bg-[#fff0f5] overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <h1 className="text-5xl font-serif font-bold text-brandBlue mb-6 text-center animate-fade-in-up">{content.title}</h1>
           <p className="text-xl text-brandCocoa/80 text-center mb-16 leading-relaxed max-w-2xl mx-auto animate-fade-in-up delay-100">
@@ -108,8 +109,8 @@ export default function AboutPage() {
 
           <div className="grid md:grid-cols-2 gap-8 mb-16">
             {content.cards.map((card, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="bg-white p-8 rounded-2xl shadow-sm border border-brandPeach/20 hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 animate-fade-in-up group"
                 style={{ animationDelay: `${(index + 2) * 100}ms` }}
               >

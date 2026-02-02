@@ -3,8 +3,8 @@ import type { Metadata } from "next"
 // import { Geist, Geist_Mono, Pacifico } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { CartProvider } from "@/lib/cart-store"
-import { MascotWidget } from "@/components/mascot/mascot-widget"
-import { ThemeSwitcher } from "@/components/theme-switcher"
+
+
 import { AOSInit } from "@/components/aos-init"
 import "./globals.css"
 
@@ -39,8 +39,8 @@ export default function RootLayout({
           <AOSInit />
           {children}
           <Analytics />
-          <MascotWidget />
-          <ThemeSwitcher />
+
+
         </CartProvider>
       </body>
     </html>

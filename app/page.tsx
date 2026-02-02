@@ -40,7 +40,7 @@ export default function HomePage() {
         <section className="py-16 px-4 bg-[#a54c9d]">
           <div className="max-w-6xl mx-auto text-center">
             <h2 data-aos="fade-up" className="text-3xl md:text-4xl font-serif font-bold text-white mb-4">
-              Weekly Picks - Staff's Recommendations
+              Weekly Picks - Customer's Recommendations
             </h2>
             <p data-aos="fade-up" data-aos-delay="100" className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
               Explore our wide range of sundaes, bars, waffle cones, and specialty treats

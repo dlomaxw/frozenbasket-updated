@@ -101,7 +101,7 @@ export default function BakeryOrderPage() {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center">
         <p className="text-xl text-muted-foreground mb-4">Product not found</p>
-        <Link href="/menu" className="text-brandBlue underline">
+        <Link href="/menu?category=bakery" className="text-brandBlue underline">
           Back to Menu
         </Link>
       </div>
@@ -114,7 +114,7 @@ export default function BakeryOrderPage() {
       <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-b">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <Link
-            href="/menu"
+            href="/menu?category=bakery"
             className="inline-flex items-center gap-2 text-muted-foreground hover:text-brandBlue transition-colors"
           >
             <ArrowLeft size={20} />
@@ -226,6 +226,17 @@ export default function BakeryOrderPage() {
                 </p>
               )}
             </div>
+
+            {/* Variants Selection (if available) - Logic adapted for items without variants */}
+            {/* Variants Selection (if available) */}
+            {product.variants && product.variants.length > 0 && (
+              <div className="mb-6">
+                <h3 className="font-bold text-xl text-brandCocoa mb-3">Choose Your Variant</h3>
+                <div className="p-4 bg-amber-50 rounded-lg text-amber-800">
+                  Please select a variant.
+                </div>
+              </div>
+            )}
 
             {/* Add to Cart Button */}
             <Button

@@ -329,11 +329,8 @@ export const MENU_CATEGORIES = {
                 name: "Waffles",
                 description: "Choose From Our Selection Of Toppings And Sauces (Honey, Chocolate sauce, Caramel sauce, Strawberry sauce, Vanilla sauce, Peanut butter, Jam, Nutella). Toppings: Strawberry, Banana, Blueberry, Sprinkles, Chocolate chips, Chocolate flakes",
                 price: 10000,
-                image: "/images/menu-items/waffle-chocolate.png",
-                variants: [
-                    { id: "waffle-choco", name: "Chocolate Waffle", price: 12000, image: "/images/menu-items/waffle-chocolate.png" },
-                    { id: "waffle-straw", name: "Strawberry Waffle", price: 12000, image: "/images/menu-items/waffle-strawberry.png" }
-                ]
+                video: "",
+                image: "/images/menu-items/waffle-chocolate.png"
             },
             {
                 id: "pancakes",
@@ -347,11 +344,8 @@ export const MENU_CATEGORIES = {
                 name: "Crepes",
                 description: "Choose From Our Selection Of Toppings And Sauces (Strawberry, Banana, Blueberry, Sprinkles, Chocolate chips, Chocolate flakes...)",
                 price: 12000,
-                image: "/images/menu-items/crepes.png",
-                variants: [
-                    { id: "crepe-sweet", name: "Sweet Crepe", price: 12000, image: "/images/menu-items/crepes.png" },
-                    { id: "crepe-savory", name: "Savory Crepe", price: 14000, image: "/images/menu-items/crepes.png" },
-                ]
+                video: "",
+                image: "/images/menu-items/crepes.png"
             },
             {
                 id: "donuts",
