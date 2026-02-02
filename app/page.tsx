@@ -47,18 +47,26 @@ export default function HomePage() {
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               {[
-                { name: "Happy Bars", price: "6,000" },
-                { name: "Single Sundae", price: "12,000" },
-                { name: "Jar Sundae", price: "20,000" },
-                { name: "Triple Sundae", price: "25,000" },
+                { name: "Happy Bars", price: "6,000", image: "/images/menu-items/happy-bars.png" },
+                { name: "Single Sundae", price: "12,000", image: "/images/menu-items/waffle-basket-single-sundae.png" },
+                { name: "Jar Sundae", price: "20,000", image: "/images/menu-items/jar-sundae.png" },
+                { name: "Triple Sundae", price: "25,000", image: "/images/menu-items/triple-sundae.png" },
               ].map((item, index) => (
                 <div
                   key={item.name}
                   data-aos="fade-up"
                   data-aos-delay={(index + 2) * 100}
-                  className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2"
+                  className="bg-white rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 group cursor-pointer"
                 >
-                  <h3 className="font-semibold text-brandCocoa mb-1">{item.name}</h3>
+                  <div className="relative aspect-square w-full mb-3 rounded-xl overflow-hidden bg-gray-50">
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                  <h3 className="font-semibold text-brandCocoa mb-1 text-sm md:text-base leading-tight">{item.name}</h3>
                   <p className="text-brandBlue font-bold">{item.price}/=</p>
                 </div>
               ))}
