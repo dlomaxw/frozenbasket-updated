@@ -79,6 +79,7 @@ export default function ContactPage() {
                   +256 753 522 992
                 </a>
                 <a href="tel:+256759091201" className="text-brandBlue hover:underline block">
+                  {/* Updated Contact Number */}
                   +256 759 091201
                 </a>
               </div>
