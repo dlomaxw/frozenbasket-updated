@@ -78,8 +78,8 @@ export default function ContactPage() {
                 <a href="tel:+256753522992" className="text-brandBlue hover:underline block">
                   +256 753 522 992
                 </a>
-                <a href="tel:+256700123456" className="text-brandBlue hover:underline block">
-                  +256 700 123 456
+                <a href="tel:+256759091201" className="text-brandBlue hover:underline block">
+                  +256 759 091201
                 </a>
               </div>
 

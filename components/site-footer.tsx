@@ -32,31 +32,6 @@ export function SiteFooter() {
               </li>
               <li>
                 <a href="#" className="hover:text-white transition-colors">
-                  Gift Cards
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-bold mb-4 text-brandPeach">Support</h4>
-            <ul className="space-y-2 text-blue-100">
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  FAQ
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Shipping
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  Returns
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
                   Contact Us
                 </a>
               </li>
