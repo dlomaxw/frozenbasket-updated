@@ -27,11 +27,6 @@ export function SiteFooter() {
               </li>
               <li>
                 <a href="#" className="hover:text-white transition-colors">
-                  Mix Builder
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
                   Offers
                 </a>
               </li>

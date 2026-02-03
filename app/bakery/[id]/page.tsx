@@ -18,6 +18,7 @@ export default function BakeryOrderPage() {
   const [product, setProduct] = useState<BakeryProduct | null>(null)
   const [availableToppings, setAvailableToppings] = useState<DbTopping[]>([])
   const [selectedToppings, setSelectedToppings] = useState<BakeryTopping[]>([])
+  const [selectedVariant, setSelectedVariant] = useState<any>(null)
   const [quantity, setQuantity] = useState(1)
   const [loading, setLoading] = useState(true)
   const [addedToCart, setAddedToCart] = useState(false)
@@ -29,6 +30,10 @@ export default function BakeryOrderPage() {
         const productData = await getBakeryProduct(productId)
         if (productData) {
           setProduct(productData)
+          // Default to first variant if available (usually Make Your Own)
+          if (productData.variants && productData.variants.length > 0) {
+            setSelectedVariant(productData.variants[0])
+          }
         }
 
         // Fetch toppings from Firebase
@@ -61,19 +66,29 @@ export default function BakeryOrderPage() {
 
   const calculateTotal = () => {
     if (!product) return 0
+    const basePrice = selectedVariant ? selectedVariant.price : product.price
     const toppingsTotal = selectedToppings.reduce((sum, t) => sum + t.price, 0)
-    return (product.price + toppingsTotal) * quantity
+    return (basePrice + toppingsTotal) * quantity
   }
 
   const handleAddToCart = () => {
     if (!product) return
 
+    // Ensure a variant is selected if variants exist
+    if (product.variants && product.variants.length > 0 && !selectedVariant) {
+      return; // Button should be disabled ideally, or show error
+    }
+
+    const currentPrice = selectedVariant ? selectedVariant.price : product.price
+    const currentName = selectedVariant ? `${product.name} - ${selectedVariant.name}` : product.name
+    const currentImage = selectedVariant?.image || product.image
+
     const bakeryOrder: BakeryOrder = {
       id: `bakery-${product.id}-${Date.now()}`,
       productId: product.id,
-      productName: product.name,
-      productImage: product.image,
-      basePrice: product.price,
+      productName: currentName,
+      productImage: currentImage,
+      basePrice: currentPrice,
       toppings: selectedToppings,
       totalPrice: calculateTotal() / quantity, // Price per item
     }
@@ -126,11 +141,11 @@ export default function BakeryOrderPage() {
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="grid md:grid-cols-2 gap-8">
           {/* Product Image */}
-          <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl overflow-hidden">
+          <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl overflow-hidden shadow-inner">
             <img
-              src={product.image || "/placeholder.svg?height=400&width=400"}
+              src={selectedVariant?.image || product.image || "/placeholder.svg?height=400&width=400"}
               alt={product.name}
-              className="w-full h-80 md:h-96 object-cover"
+              className="w-full h-80 md:h-96 object-contain p-6 hover:scale-105 transition-transform duration-500"
             />
           </div>
 
@@ -141,15 +156,37 @@ export default function BakeryOrderPage() {
               Bakery
             </div>
             <h1 className="text-4xl font-serif font-bold text-brandCocoa mb-2">{product.name}</h1>
-            <p className="text-muted-foreground mb-4">{product.description}</p>
+            <p className="text-muted-foreground mb-4">{selectedVariant?.description || product.description}</p>
             <p className="text-3xl font-bold text-amber-600 mb-6">
-              Base Price: {(product.price / 1000).toFixed(0)}k UGX
+              Base Price: {((selectedVariant?.price || product.price) / 1000).toFixed(0)}k UGX
             </p>
+
+            {/* Variants Selection */}
+            {product.variants && product.variants.length > 0 && (
+              <div className="mb-6">
+                <h3 className="font-bold text-xl text-brandCocoa mb-3">Choose Your Option</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {product.variants.map((variant: any) => (
+                    <button
+                      key={variant.id}
+                      onClick={() => setSelectedVariant(variant)}
+                      className={`p-3 rounded-xl border-2 text-left transition-all ${selectedVariant?.id === variant.id
+                          ? "border-amber-500 bg-amber-50 ring-2 ring-amber-200"
+                          : "border-border hover:border-amber-300"
+                        }`}
+                    >
+                      <div className="font-bold text-brandCocoa">{variant.name}</div>
+                      <div className="text-sm text-amber-600">{(variant.price / 1000).toFixed(0)}k UGX</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Toppings Selection */}
             <div className="mb-6">
-              <h3 className="font-bold text-xl text-brandCocoa mb-3">Choose Your Toppings</h3>
-              <p className="text-sm text-muted-foreground mb-4">Select as many as you like!</p>
+              <h3 className="font-bold text-xl text-brandCocoa mb-3">Add Toppings</h3>
+              <p className="text-sm text-muted-foreground mb-4">Customize your treat!</p>
               <div className="grid grid-cols-2 gap-3">
                 {availableToppings.map((topping) => (
                   <button
@@ -219,29 +256,17 @@ export default function BakeryOrderPage() {
                   {(calculateTotal() / 1000).toFixed(0)}k UGX
                 </span>
               </div>
-              {selectedToppings.length > 0 && (
-                <p className="text-sm text-amber-600 mt-1">
-                  Base ({(product.price / 1000).toFixed(0)}k) + Toppings (
-                  {(selectedToppings.reduce((sum, t) => sum + t.price, 0) / 1000).toFixed(1)}k) x {quantity}
-                </p>
-              )}
+              <p className="text-sm text-amber-600 mt-1">
+                Base ({((selectedVariant?.price || product.price) / 1000).toFixed(0)}k)
+                {selectedToppings.length > 0 && ` + Toppings (${(selectedToppings.reduce((sum, t) => sum + t.price, 0) / 1000).toFixed(1)}k)`}
+                x {quantity}
+              </p>
             </div>
-
-            {/* Variants Selection (if available) - Logic adapted for items without variants */}
-            {/* Variants Selection (if available) */}
-            {product.variants && product.variants.length > 0 && (
-              <div className="mb-6">
-                <h3 className="font-bold text-xl text-brandCocoa mb-3">Choose Your Variant</h3>
-                <div className="p-4 bg-amber-50 rounded-lg text-amber-800">
-                  Please select a variant.
-                </div>
-              </div>
-            )}
 
             {/* Add to Cart Button */}
             <Button
               onClick={handleAddToCart}
-              disabled={addedToCart}
+              disabled={addedToCart || (product.variants && product.variants.length > 0 && !selectedVariant)}
               className={`w-full py-6 text-lg font-bold rounded-full transition-all ${addedToCart
                 ? "bg-green-500 hover:bg-green-500"
                 : "bg-amber-500 hover:bg-amber-600"

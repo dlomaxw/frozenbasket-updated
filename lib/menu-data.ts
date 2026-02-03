@@ -328,32 +328,42 @@ export const MENU_CATEGORIES = {
                 id: "waffles",
                 name: "Waffles",
                 description: "Choose From Our Selection Of Toppings And Sauces (Honey, Chocolate sauce, Caramel sauce, Strawberry sauce, Vanilla sauce, Peanut butter, Jam, Nutella). Toppings: Strawberry, Banana, Blueberry, Sprinkles, Chocolate chips, Chocolate flakes",
-                price: 10000,
+                price: 20000,
                 video: "",
-                image: "/images/menu-items/waffle-chocolate.png"
+                image: "/images/menu-items/waffle-chocolate.png",
+                variants: [
+                    { id: "waffle-make-your-own", name: "Make Your Own", price: 20000, image: "/images/menu-items/waffle-chocolate.png", description: "Customize your waffle with our wide range of toppings." }
+                ]
             },
             {
                 id: "pancakes",
                 name: "Pancakes",
                 description: "Choose From Our Selection Of Toppings And Sauces (Strawberry, Banana, Blueberry, Sprinkles, Chocolate chips, Chocolate flakes, Honey, Chocolate sauce, Caramel sauce...)",
-                price: 10000,
-                image: "/images/menu-items/pancakes.png"
+                price: 20000,
+                image: "/images/menu-items/pancakes.png",
+                variants: [
+                    { id: "pancake-make-your-own", name: "Make Your Own", price: 20000, image: "/images/menu-items/pancakes.png", description: "Customize your pancakes with our wide range of toppings." }
+                ]
             },
             {
                 id: "crepes",
                 name: "Crepes",
                 description: "Choose From Our Selection Of Toppings And Sauces (Strawberry, Banana, Blueberry, Sprinkles, Chocolate chips, Chocolate flakes...)",
-                price: 12000,
+                price: 20000,
                 video: "",
-                image: "/images/menu-items/crepes.png"
+                image: "/images/menu-items/crepes.png",
+                variants: [
+                    { id: "crepe-make-your-own", name: "Make Your Own", price: 20000, image: "/images/menu-items/crepes.png", description: "Customize your crepe with our wide range of toppings." }
+                ]
             },
             {
                 id: "donuts",
                 name: "Donuts",
                 description: "Freshly glazed donuts",
                 price: 8000,
-                image: "/images/menu-items/donut-chocolate.png",
+                image: "/images/menu-items/donut-plain.png",
                 variants: [
+                    { id: "donut-make-your-own", name: "Make Your Own", price: 8000, image: "/images/menu-items/donut-plain.png", description: "Customize your donut with our wide range of toppings." },
                     { id: "donut-chocolate", name: "Chocolate Donut", price: 8000, image: "/images/menu-items/donut-chocolate.png" },
                     { id: "donut-strawberry", name: "Strawberry Iced Donut", price: 8000, image: "/images/menu-items/donut-strawberry.png" },
                     { id: "donut-orange", name: "Orange Iced Donut", price: 8000, image: "/images/menu-items/donut-orange.png" },

@@ -132,6 +132,12 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
                     <p className="text-lg text-muted-foreground mb-4 line-clamp-3">
                       {product.description || "Customize this delicious treat!"}
                     </p>
+                    <Link
+                      href={`/bakery/${product.id}`}
+                      className="mt-auto w-full block text-center bg-brandPeach text-white font-bold py-2 rounded-lg hover:bg-brandPeach/90 transition-colors"
+                    >
+                      Make Your Own
+                    </Link>
                   </div>
                 </div>
               ))}
@@ -237,6 +243,12 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
                     {flavor.allergens.length > 0 && (
                       <p className="text-xs text-muted-foreground/60 italic">Allergens: {flavor.allergens.join(", ")}</p>
                     )}
+                    <Link
+                      href={`/bakery/coneOrCup`}
+                      className="mt-4 w-full block text-center bg-brandBlue text-white font-bold py-2 rounded-lg hover:bg-brandBlue/90 transition-colors"
+                    >
+                      Make Your Own
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -314,8 +326,8 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
                     <p className="text-lg text-muted-foreground mb-4">
                       {product.description || "Delicious bakery treat with your choice of toppings!"}
                     </p>
-                    <div className="mt-auto">
-                      <div className="flex flex-wrap gap-1 mb-4">
+                    <div className="mb-4">
+                      <div className="flex flex-wrap gap-1">
                         {["Nutella", "Honey", "Strawberry", "Banana"].map((topping) => (
                           <span
                             key={topping}
@@ -329,6 +341,12 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
                         </span>
                       </div>
                     </div>
+                    <Link
+                      href={`/bakery/${product.id}`}
+                      className="mt-auto w-full block text-center bg-amber-500 text-white font-bold py-2 rounded-lg hover:bg-amber-600 transition-colors"
+                    >
+                      Make Your Own
+                    </Link>
                   </div>
                 </div>
               ))}
@@ -397,6 +415,12 @@ export function MenuGrid({ onAddQuick }: MenuGridProps) {
                     <p className="text-lg text-muted-foreground mb-4">
                       {product.description || "Delicious shake!"}
                     </p>
+                    <Link
+                      href={`/bakery/${product.id}`}
+                      className="mt-auto w-full block text-center bg-purple-500 text-white font-bold py-2 rounded-lg hover:bg-purple-600 transition-colors"
+                    >
+                      Make Your Own
+                    </Link>
                   </div>
                 </div>
               ))}

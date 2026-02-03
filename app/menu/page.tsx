@@ -243,6 +243,7 @@ function MenuContent() {
               {(activeFamily.variants || [activeFamily]).map((variant: any, index: number) => (
                 <div key={variant.id} data-aos="fade-up" data-aos-delay={index * 50}>
                   <ProductCard
+                    id={variant.id}
                     title={variant.name}
                     price={variant.price.toLocaleString()}
                     image={variant.image || activeFamily.image}
@@ -290,7 +291,7 @@ export default function MenuPage() {
   )
 }
 
-function ProductCard({ title, price, image, description, onView }: { title: string; price: string; image: string; description?: string; onView?: () => void }) {
+function ProductCard({ id, title, price, image, description, onView }: { id: string; title: string; price: string; image: string; description?: string; onView?: () => void }) {
   // Check for multi-pricing in description (e.g. "Small: 10,000 UGX | Mega: 15,000 UGX")
   const priceRegex = /(Small:.*?UGX\s*\|\s*Mega:.*?UGX)/i
   const match = description?.match(priceRegex)
@@ -333,6 +334,16 @@ function ProductCard({ title, price, image, description, onView }: { title: stri
 
         <div className="mt-auto border-t border-gray-50 pt-4 text-center">
           {displayPrice}
+          <div className="mt-3">
+            {/* Stop propagation to prevent opening image modal when clicking the link */}
+            <a
+              href={`/bakery/${id}`}
+              onClick={(e) => e.stopPropagation()}
+              className="inline-block w-full text-center bg-[var(--purple-bg)] text-white font-bold py-2 rounded-lg hover:bg-[var(--purple-bg)]/90 transition-colors uppercase text-sm tracking-wide"
+            >
+              Make Your Own
+            </a>
+          </div>
         </div>
       </div>
     </div>
