@@ -47,9 +47,15 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID?.trim(),
 };
 
+console.log("[v0] Firebase projectId:", firebaseConfig.projectId, "apiKey set:", !!firebaseConfig.apiKey);
+
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
-export { app };
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+console.log("[v0] db type:", typeof db, "db constructor:", db?.constructor?.name);
+console.log("[v0] db is Firestore:", db?.type === "firestore");
+
+export { app, auth, db, storage };
