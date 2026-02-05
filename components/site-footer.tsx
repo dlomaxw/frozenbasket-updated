@@ -83,6 +83,9 @@ export function SiteFooter() {
             <a href="#" className="hover:text-white transition-colors">
               Terms of Service
             </a>
+            <a href="/admin/login" className="hover:text-white transition-colors flex items-center gap-1 opacity-50 hover:opacity-100">
+              <ShieldCheck size={14} /> Admin
+            </a>
           </div>
         </div>
       </div>
