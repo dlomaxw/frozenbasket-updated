@@ -38,14 +38,6 @@ function sanitizeBucket(value: string | undefined): string | undefined {
     return trimmed;
 }
 
-// Log raw env var values before any processing
-console.log("[v0] RAW NEXT_PUBLIC_FIREBASE_API_KEY:", process.env.NEXT_PUBLIC_FIREBASE_API_KEY ? "SET (length: " + process.env.NEXT_PUBLIC_FIREBASE_API_KEY.length + ")" : "UNSET");
-console.log("[v0] RAW NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN:", process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN);
-console.log("[v0] RAW NEXT_PUBLIC_FIREBASE_PROJECT_ID:", process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID);
-console.log("[v0] RAW NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET:", process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET);
-console.log("[v0] RAW NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID:", process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID);
-console.log("[v0] RAW NEXT_PUBLIC_FIREBASE_APP_ID:", process.env.NEXT_PUBLIC_FIREBASE_APP_ID);
-
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY?.trim(),
     authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN?.trim(),
@@ -54,8 +46,6 @@ const firebaseConfig = {
     messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID?.trim(),
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID?.trim(),
 };
-
-console.log("[v0] RESOLVED firebaseConfig:", JSON.stringify(firebaseConfig));
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
