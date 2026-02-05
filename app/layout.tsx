@@ -18,6 +18,7 @@ import "./globals.css"
 // })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.frozenbasketug.com'),
   title: "Frozen Basket - Handcrafted Ice Cream Delivered",
   description:
     "Experience the joy of handcrafted ice cream. Choose from 24 premium flavors or build your own custom mix with our interactive builder.",

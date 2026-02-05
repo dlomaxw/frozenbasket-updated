@@ -16,9 +16,11 @@ export default function AdminDashboardPage() {
                     <p className="text-gray-500 mt-1 text-lg">Good morning! Here's what's happening at Frozen Basket.</p>
                 </div>
                 <div className="flex gap-3">
-                    <Button className="bg-brandBlue text-white hover:bg-brandBlue/90 rounded-full px-6 shadow-lg shadow-brandBlue/20">
-                        View Live Site
-                    </Button>
+                    <Link href="/">
+                        <Button className="bg-brandBlue text-white hover:bg-brandBlue/90 rounded-full px-6 shadow-lg shadow-brandBlue/20">
+                            View Live Site
+                        </Button>
+                    </Link>
                 </div>
             </div>
 
