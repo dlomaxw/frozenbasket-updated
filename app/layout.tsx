@@ -6,6 +6,7 @@ import { CartProvider } from "@/lib/cart-store"
 
 
 import { AOSInit } from "@/components/aos-init"
+import AnalyticsTracker from "@/components/analytics-tracker"
 import "./globals.css"
 
 // const _geist = Geist({ subsets: ["latin"] })
@@ -39,6 +40,7 @@ export default function RootLayout({
           <AOSInit />
           {children}
           <Analytics />
+          <AnalyticsTracker />
 
 
         </CartProvider>

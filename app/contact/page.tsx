@@ -1,14 +1,50 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { useCartStore } from "@/lib/cart-store"
 import { MapPin, Phone, Clock, Mail, MessageCircle, Send, Instagram, Facebook } from "lucide-react"
+import { db } from "@/lib/firebase"
+import { doc, getDoc } from "firebase/firestore"
 
 export default function ContactPage() {
   const { getItemCount } = useCartStore()
   const cartCount = getItemCount()
+
+  const [content, setContent] = useState({
+    phone: "+256 753 522 992",
+    address: "Opp. Lohana Academy, Kisement, Kampala",
+    email: "info@frozenbasket.com",
+    openingHours: "10:00 AM - 10:00 PM",
+    whatsapp: "256753522992" // derived or extra field
+  })
+
+  useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        const docRef = doc(db, 'pages', 'contact')
+        const docSnap = await getDoc(docRef)
+        if (docSnap.exists()) {
+          const data = docSnap.data().content
+          if (data) {
+            setContent(prev => ({
+              ...prev,
+              ...data,
+              // Ensure defaults if missing
+              phone: data.phone || prev.phone,
+              address: data.address || prev.address,
+              email: data.email || prev.email,
+              openingHours: data.openingHours || prev.openingHours
+            }))
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching contact info:", error)
+      }
+    }
+    fetchContent()
+  }, [])
 
   const [formData, setFormData] = useState({
     name: "",
@@ -64,8 +100,7 @@ export default function ContactPage() {
                   <MapPin size={28} className="text-brandBlue group-hover:animate-bounce-slow" />
                 </div>
                 <h3 className="font-semibold text-brandCocoa mb-2">Visit Us</h3>
-                <p className="text-gray-600">Opp. Lohana Academy</p>
-                <p className="text-gray-600">Kisement, Kampala</p>
+                <p className="text-gray-600 whitespace-pre-wrap">{content.address}</p>
                 <p className="text-gray-600">Uganda</p>
               </div>
 
@@ -75,12 +110,8 @@ export default function ContactPage() {
                   <Phone size={28} className="text-brandPeach group-hover:animate-bounce-slow" />
                 </div>
                 <h3 className="font-semibold text-brandCocoa mb-2">Call Us</h3>
-                <a href="tel:+256753522992" className="text-brandBlue hover:underline block">
-                  +256 753 522 992
-                </a>
-                <a href="tel:+256759091201" className="text-brandBlue hover:underline block">
-                  {/* Updated Contact Number */}
-                  +256 759 091201
+                <a href={`tel:${content.phone.replace(/\s/g, '')}`} className="text-brandBlue hover:underline block">
+                  {content.phone}
                 </a>
               </div>
 
@@ -91,7 +122,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="font-semibold text-brandCocoa mb-2">Opening Hours</h3>
                 <p className="text-gray-600">Monday - Sunday</p>
-                <p className="text-brandBlue font-medium">10:00 AM - 10:00 PM</p>
+                <p className="text-brandBlue font-medium">{content.openingHours}</p>
               </div>
 
               {/* WhatsApp */}

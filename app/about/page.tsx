@@ -5,6 +5,8 @@ import { SiteFooter } from "@/components/site-footer"
 import { useCartStore } from "@/lib/cart-store"
 import { Award, Heart, Leaf, Truck } from "lucide-react"
 import { useEffect, useState } from "react"
+import { db } from "@/lib/firebase"
+import { doc, getDoc } from "firebase/firestore"
 
 interface AboutContent {
   title: string
@@ -55,10 +57,15 @@ export default function AboutPage() {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const response = await fetch("/api/website-content")
-        const data = await response.json()
-        if (data.about_page) {
-          setContent(data.about_page)
+        const docRef = doc(db, 'pages', 'about')
+        const docSnap = await getDoc(docRef)
+
+        if (docSnap.exists()) {
+          // Merge default structure with fetched data to ensure arrays like 'cards' exist if missing
+          const data = docSnap.data().content
+          if (data) {
+            setContent(prev => ({ ...prev, ...data }))
+          }
         }
       } catch (error) {
         console.error("Error fetching about content:", error)
