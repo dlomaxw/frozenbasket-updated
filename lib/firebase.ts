@@ -13,6 +13,8 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
+console.log("[v0] Firebase config:", JSON.stringify(firebaseConfig, null, 2));
+
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
 export const auth = getAuth(app);
